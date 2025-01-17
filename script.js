@@ -4,6 +4,7 @@ const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
 const fromDropDown = document.querySelector("#from-currency-select");
 const toDropDown = document.querySelector("#to-currency-select");
 const result = document.querySelector("#result");
+const errorMessageDiv = document.querySelector("#error-message");
 
 const currencyCodes = [
   "AED",
@@ -170,45 +171,59 @@ const currencyCodes = [
   "ZWL",
 ];
 
-currencyCodes.forEach((currency) => {
-  const option = document.createElement("option");
-  option.value = currency;
-  option.textContent = currency;
-  fromDropDown.appendChild(option);
-});
+// Populate the dropdowns with currency codes
+const populateCurrencyDropdown = (dropdown) => {
+  currencyCodes.forEach((currency) => {
+    const option = document.createElement("option");
+    option.value = currency;
+    option.textContent = currency;
+    dropdown.appendChild(option);
+  });
+};
 
-currencyCodes.forEach((currency) => {
-  const option = document.createElement("option");
-  option.value = currency;
-  option.textContent = currency;
-  toDropDown.appendChild(option);
-});
+populateCurrencyDropdown(fromDropDown);
+populateCurrencyDropdown(toDropDown);
 
 fromDropDown.value = "TRY";
 toDropDown.value = "USD";
 
+// Display error messages
+const showErrorMessage = (message) => {
+  errorMessageDiv.textContent = message;
+  errorMessageDiv.style.display = "block";
+};
+
+const hideErrorMessage = () => {
+  errorMessageDiv.style.display = "none";
+};
+
+// Convert currency based on user input
 const convertCurrency = () => {
-  const amount = document.querySelector("#amount").value;
+  const amount = document.querySelector("#amount").value.trim();
   const fromCurrency = fromDropDown.value;
   const toCurrency = toDropDown.value;
 
-  if (amount.length != 0) {
+  if (amount) {
     fetch(apiUrl)
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        hideErrorMessage();
         const fromExchangeRate = data.conversion_rates[fromCurrency];
         const toExchangeRate = data.conversion_rates[toCurrency];
         const convertedAmount = (amount / fromExchangeRate) * toExchangeRate;
 
         result.innerHTML = `${amount} ${fromCurrency} = ${convertedAmount.toFixed(
           2
-        )}`;
+        )} ${toCurrency}`;
+      })
+      .catch((error) => {
+        showErrorMessage(
+          "An error occurred while fetching the data. Please try again."
+        );
+        console.error(error);
       });
   } else {
-    alert("Please fill in the amount !");
+    showErrorMessage("Please enter a valid amount!");
   }
 };
 

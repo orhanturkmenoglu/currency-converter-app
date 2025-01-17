@@ -18,14 +18,17 @@
         <h1 class="app-title">Currency Converter</h1>
       </div>
       <label for="amount">Amount:</label>
-      <input type="number" id="amount" value="100" />
+      <input type="number" id="amount" value="" />
       <div class="dropdowns">
         <select id="from-currency-select"></select>
         <select id="to-currency-select"></select>
       </div>
       <button on id="convert-button">Convert</button>
       <p id="result"></p>
-      <p id="loading-message" class="hidden">Loading...</p>
+      <div
+        id="error-message"
+        style="color: red; display: none; font-size: 14px; margin-top: 10px"
+      ></div>
     </div>
     <script src="script.js"></script>
   </body>
