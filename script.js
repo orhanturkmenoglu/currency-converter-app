@@ -224,6 +224,7 @@ const convertCurrency = () => {
       });
   } else {
     showErrorMessage("Please enter a valid amount!");
+    result.innerHTML = "";
   }
 };
 
