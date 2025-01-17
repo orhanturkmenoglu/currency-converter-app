@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="app-details">
+        <img class="app-icon" src="images/app-icon.png" alt="" />
+        <h1 class="app-title">Currency Converter</h1>
+      </div>
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" value="100" />
+      <div class="dropdowns">
+        <select id="from-currency-select"></select>
+        <select id="to-currency-select"></select>
+      </div>
+      <button on id="convert-button">Convert</button>
+      <p id="result"></p>
+      <p id="loading-message" class="hidden">Loading...</p>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
